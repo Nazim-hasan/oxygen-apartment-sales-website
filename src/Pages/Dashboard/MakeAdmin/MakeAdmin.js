@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 const MakeAdmin = () => {
@@ -26,23 +25,58 @@ const MakeAdmin = () => {
             .then(data => {
                 if (data.modifiedCount > 0) {
                     setRefresh(true);
-                }
+            }
             })
     }
+    // const handleDelete =(id)=>{
+    //     const proceed=window.confirm('Are you sure, To cancel');
+    //     if(proceed){
+    //         fetch(`https://gentle-mesa-29497.herokuapp.com/users/${id}`,{
+    //             method: 'DELETE'
+    //         })
+    //         .then(res => res.json())
+    //         .then(data=>{
+    //             if(data.deletedCount>0){
+    //                 alert('Deleted Successfully');
+    //                 const remainingUsers= users.filter(user => user._id !== id)
+    //                 setUsers(remainingUsers)
+    //             }
+    //         })
+    //     }
+    // }
 
 
     const handleNewAdmin =(id,user) =>{
         //Update Status
 
-        handleUpdate(id,user);
-        axios.post(`https://gentle-mesa-29497.herokuapp.com/addAdmin/${user.email}`)
-        .then(res => {
-                console.log(res);
-                if(res.data.insertedId){
-                    alert("Added as admin successfully");
-                }
+        const url = `https://gentle-mesa-29497.herokuapp.com/addAdmin/${user.email}`;
+        fetch(url, {
+            method: 'post',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if(data.insertedId){
+                                alert("Added as admin successfully");
+                                handleUpdate(id,user);
+                                // handleDelete(id);
+                            }
             })
+        
+        // axios.post(`https://gentle-mesa-29497.herokuapp.com/addAdmin/${user.email}`,user)
+        // .then(res => {
+        //         console.log(res);
+        //         if(res.data.insertedId){
+        //             alert("Added as admin successfully");
+        //             handleUpdate(id,user);
+        //         }
+        //     }) 
+            
         }
+
     return (
         <div>
             Make an admin

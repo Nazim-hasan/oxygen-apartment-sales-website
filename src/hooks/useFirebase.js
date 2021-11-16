@@ -10,7 +10,7 @@ const useFirebase=()=>{
     const [authError, setAuthError] = useState('');
     const auth = getAuth();
 
-    const googleProvider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
     useEffect(()=>{
             fetch(`https://gentle-mesa-29497.herokuapp.com/isAdmin?email=${user.email}`)
             .then(res=>res.json())
